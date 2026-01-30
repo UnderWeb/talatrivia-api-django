@@ -1,0 +1,77 @@
+# =====================================================
+# Anchors / Base configuration
+# =====================================================
+x-talatrivia-base: &talatrivia-base
+  build:
+    context: .
+    dockerfile: Dockerfile
+  env_file:
+    - .env
+  networks:
+    - talatrivia-network
+  depends_on:
+    talatrivia-redis:
+      condition: service_healthy
+    talatrivia-postgres:
+      condition: service_healthy
+  restart: unless-stopped
+
+# =====================================================
+# Services (base)
+# =====================================================
+services:
+  talatrivia-api-django:
+    <<: *talatrivia-base
+    user: "1000:1000"
+    container_name: talatrivia-api-django
+    build:
+      target: development
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/usr/src/app
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings.development
+      DEBUG: "1"
+      HEALTHCHECK_PATH: /health/
+
+  talatrivia-postgres:
+    image: postgres:16-alpine
+    container_name: talatrivia-postgres
+    environment:
+      POSTGRES_USER: talatrivia_user
+      POSTGRES_PASSWORD: talatrivia_password
+      POSTGRES_DB: talatrivia_db
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - talatrivia-postgres-data:/var/lib/postgresql/data/pgdata
+    networks:
+      - talatrivia-network
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U talatrivia_user -d talatrivia_db" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+
+  talatrivia-redis:
+    image: redis:7-alpine
+    container_name: talatrivia-redis
+    command: redis-server --appendonly yes --requirepass redis_password --dir /data
+    networks:
+      - talatrivia-network
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  talatrivia-postgres-data:
+
+
+networks:
+  talatrivia-network:
+    driver: bridge

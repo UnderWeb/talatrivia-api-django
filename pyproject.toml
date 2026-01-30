@@ -1,0 +1,122 @@
+[tool.poetry]
+name = "talatrivia-api"
+version = "0.1.1"
+description = "Talatrivia API backend"
+authors = ["Ricardo Palma <webschile@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.10,<4.0"
+
+# ======================================================
+# Core framework
+# ======================================================
+django = "^5.2"
+
+# ======================================================
+# DRF
+# ======================================================
+djangorestframework = "^3.16"
+djangorestframework-simplejwt = "^5.5.1"
+drf-spectacular = "^0.29.0"
+
+# ======================================================
+# Database
+# ======================================================
+psycopg = { version = "^3.1", extras = ["binary"] }
+dj-database-url = "^3.0.1"
+
+# ======================================================
+# Distributed tasks & cache
+# ======================================================
+django-redis = "^6.0.0"
+
+# ======================================================
+# Cors & Filters
+# ======================================================
+django-cors-headers = "^4.9.0"
+django-filter = "^25.2"
+
+
+# ======================================================================
+# DEV DEPENDENCIES
+# ======================================================================
+[tool.poetry.group.dev]
+optional = true
+
+[tool.poetry.group.dev.dependencies]
+# ======================================================
+# Code quality
+# ======================================================
+black = "^25.11"
+flake8 = "^7.3"
+isort = "^7.0"
+
+# ======================================================
+# Git hooks
+# ======================================================
+pre-commit = "^4.5"
+
+# ======================================================
+# Testing
+# ======================================================
+pytest = "^9.0"
+pytest-cov = "^7.0"
+pytest-django = "^4.11"
+pytest-xdist = "^3.8"
+factory-boy = "^3.3"
+mypy = "^1.19.0"
+
+# ======================================================
+# Security
+# ======================================================
+bandit = "^1.9"
+safety = "^3.7"
+
+# ======================================================
+# Django debugging tools
+# ======================================================
+django-extensions = "^4.1"
+
+# ======================================================
+# REPL debugging
+# ======================================================
+ipdb = "^0.13"
+
+# ======================================================
+# File watching
+# ======================================================
+watchdog = "^6.0"
+
+# ======================================================
+# DRF utils
+# ======================================================
+drf-writable-nested = "^0.7.2"
+drf-access-policy = "^1.5.0"
+
+[tool.black]
+line-length = 88
+target-version = ["py310"]
+extend-exclude = "migrations"
+
+[tool.isort]
+profile = "black"
+line_length = 88
+py_version = 310
+extend_skip = ["migrations"]
+known_first_party = ["core", "apps", "config"]
+
+[tool.mypy]
+python_version = "3.10"
+ignore_missing_imports = true
+warn_unused_configs = true
+warn_return_any = true
+warn_unused_ignores = true
+disallow_untyped_defs = false
+exclude = "migrations"
+
+[build-system]
+requires = ["poetry-core>=2.0.0"]
+build-backend = "poetry.core.masonry.api"

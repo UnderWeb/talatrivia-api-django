@@ -1,0 +1,80 @@
+# ======================================
+# Python / Virtual Environments
+# ======================================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+
+# ======================================
+# Build Artifacts
+# ======================================
+build/
+dist/
+*.egg-info/
+*.egg
+
+# ======================================
+# Django-Specific Files
+# ======================================
+*.log
+local_settings.py
+db.sqlite3
+media/
+staticfiles/
+static_root/
+collected_static/
+instance/
+tmp/
+
+# ======================================
+# Testing / Coverage
+# ======================================
+.pytest_cache/
+.coverage
+htmlcov/
+*.cover
+.cache/
+
+# ======================================
+# Environment Variables / Secrets
+# ======================================
+.env
+.env.*
+*.pem
+*.crt
+*.key
+.aws/
+
+# ======================================
+# Version control
+# ======================================
+.gitignore
+.gitattributes
+.github/
+
+# ======================================
+# IDE / Editors
+# ======================================
+.vscode/
+.idea/
+.idea_modules/
+*.swp
+*.swo
+*.bak
+
+# ======================================
+# Project-specific
+# ======================================
+__init__.py~
+docs/_build/
+site/
+
+# ======================================
+# Optional / Extra Cleanup
+# ======================================
+*.log.*

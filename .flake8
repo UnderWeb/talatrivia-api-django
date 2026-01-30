@@ -1,0 +1,51 @@
+[flake8]
+# ======================================================
+# General limits and rules
+# ======================================================
+max-line-length = 88
+extend-ignore = 
+    E203,
+    W503
+
+# ======================================================
+# Exclusions
+# ======================================================
+exclude = 
+    .git,
+    __pycache__,
+    .venv,
+    venv,
+    env,
+    .tox,
+    .mypy_cache,
+    build,
+    dist,
+    *.egg-info,
+    migrations,
+    node_modules
+
+# ======================================================
+# Per-file ignores
+# ======================================================
+per-file-ignores = 
+    # __init__.py may have unused imports for public API
+    __init__.py: F401,
+    # Tests may use assert (S101) and magic numbers
+    tests/*: S101, B011,
+    */tests/*: S101, B011,
+    # Complex configuration files
+    */settings/*: F403, F405,
+    # urls.py files may contain long lines
+    */urls.py: E501
+
+# ======================================================
+# Cyclomatic complexity
+# ======================================================
+max-complexity = 15
+
+# ======================================================
+# Professional output
+# ======================================================
+format = default
+statistics = true
+count = true
